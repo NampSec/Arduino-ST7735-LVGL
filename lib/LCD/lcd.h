@@ -37,4 +37,6 @@ void lcd_write_data8(uint8_t data);
 void lcd_write_data16(uint16_t data);
 void lcd_addr_set(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2);
 void lcd_draw_rectangle(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t color);
+void font_16_print(uint8_t (*ptr)[16],int size,uint8_t x,uint8_t y);
+void font_16_print_char(uint8_t x,uint8_t y,uint8_t * data);
 #endif

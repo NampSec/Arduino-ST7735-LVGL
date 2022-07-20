@@ -193,3 +193,47 @@ void lcd_draw_rectangle(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t
 		}
 	}                   
 }
+//打印出16x8的一句话
+void font_16_print(uint8_t (*ptr)[16],int size,uint8_t x,uint8_t y)
+{
+	uint8_t temp = 0;
+    int row = size / 16;
+	assert((x + row * 8 < WIDTH) && (y + 16  < HEIGHT));
+
+    lcd_addr_set(x,y, x + row * 8 - 1,y + 16 - 1);
+    for(int i = 0; i < size;i++)
+    {
+
+        temp = ptr[i % row][i / row];
+        for(int j = 0;j < 8;j++)
+        {
+            if (temp & 0x01)
+                lcd_write_data16(BLACK);//字体颜色
+            else
+                lcd_write_data16(WHITE);//调试的时候一定不要用空格这些看不见的符号，背景颜色
+            temp >>= 1;
+        }
+    }
+
+}
+//打印出16x16一个字
+void font_16_print_char(uint8_t x,uint8_t y,uint8_t * data)
+{
+	uint8_t temp = 0;
+	assert((x + 16 <= WIDTH) && (y + 16  <= HEIGHT));
+	lcd_addr_set(x,y, x +  16 - 1,y + 16 - 1);
+    for(int i = 0; i < 32;i++)
+    {
+
+        temp = *data++;
+        for(int j = 0;j < 8;j++)
+        {
+            if (temp & 0x01)
+                lcd_write_data16(BLACK);//字体颜色
+            else
+                lcd_write_data16(WHITE);//调试的时候一定不要用空格这些看不见的符号，背景颜色
+            temp >>= 1;
+        }
+    }
+
+}
